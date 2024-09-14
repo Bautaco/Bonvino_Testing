@@ -1,0 +1,16 @@
+{% extends "Maridaje_App/Base.html" %}
+
+{% block content %}
+
+<h3>Inicio</h3>
+<hr>
+{% if request.user.is_authenticated %}
+
+<h4>
+    
+    {{user.username | upper}}, Bienvenido
+
+</h4>    
+{% endif %}
+
+{% endblock %}

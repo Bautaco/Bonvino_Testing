@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="">
+    </head>
+    <body>
+        <h2>    Inicio  </h2>
+        <ul>
+            <li><a href={% url "Home"%}> Inicio </a></li>
+            <li><a href={% url "Vino"%}> Vino </a></li>
+            <li><a href={% url "Comida"%}> Comida </a></li>
+            <li><a href={% url "Maridaje"%}> Maridaje </a></li>
+            {% if request.user.is_authenticated %}
+                <li><a href="">Salir</a></li> 
+            {% else %}
+                <li><a href="">Login</a></li>
+            {% endif %}
+        </ul>
+
+        {% block content %}{% endblock %}
+    </body>
+</html>

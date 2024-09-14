@@ -1,0 +1,23 @@
+{% extends "Maridaje_App/Base.html" %}
+
+{% block content %}
+
+<h3>LOGIN</h3>
+
+<br>
+
+<form action="" method="post">
+    {% csrf_token %}
+
+    <input type="Text" name="Username" id="" placeholder="Nombre de Usuario">
+    
+    <br>
+    
+    <input type="Password" name="Password" id="" placeholder="Contraseña">
+    
+    <br>
+    
+    <button type="submit">Iniciar sesión</button>
+
+</form>
+{% endblock %}
