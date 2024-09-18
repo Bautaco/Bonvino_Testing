@@ -21,6 +21,5 @@ urlpatterns = [
     path('', Home, name='Home'),
     path('Vino/', Vino, name='Vino'),
     path('Comida/', Comida, name='Comida'),
-    path('Maridaje/', Maridaje, name='Maridaje'),
-    
+    path('Maridaje/', Maridaje, name='Maridaje')
 ]

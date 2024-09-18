@@ -6,6 +6,7 @@ class Vino(models.Model):
     bodega = models.CharField(max_length=100)
     varietal = models.CharField(max_length=50)
     region = models.CharField(max_length=100)
+    foto = models.ImageField(upload_to='vinos/', null=True, blank=True)
     
     def __str__(self):
         return self.nombre
@@ -13,7 +14,8 @@ class Vino(models.Model):
 class Comida(models.Model):
     nombre = models.CharField(max_length=100)
     descripcion = models.TextField()
-
+    foto = models.ImageField(upload_to='comidas/', null=True, blank=True)
+    
     def __str__(self):
         return self.nombre
 
