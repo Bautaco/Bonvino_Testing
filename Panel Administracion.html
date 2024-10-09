@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BonVino - Panel de Administración</title>
+    <style>
+        :root {
+            --primary-color: #e0e0e0;
+            --secondary-color: #ffffff;
+            --text-color: #333333;
+            --shadow-color: #bebebe;
+            --highlight-color: #d64161;
+        }
+
+        .dark-mode {
+            --primary-color: #333333;
+            --secondary-color: #1a1a1a;
+            --text-color: #f0f0f0;
+            --shadow-color: #1e1e1e;
+            --highlight-color: #ff6b6b;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--primary-color);
+            color: var(--text-color);
+            transition: all 0.3s ease;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+        }
+
+        h1, h2 {
+            font-size: 2rem;
+            text-shadow: 2px 2px 4px var(--shadow-color);
+            margin-bottom: 20px;
+        }
+
+        .toggle-container {
+            position: relative;
+            width: 60px;
+            height: 30px;
+            background-color: var(--secondary-color);
+            border-radius: 15px;
+            box-shadow: inset 2px 2px 5px var(--shadow-color), inset -2px -2px 5px var(--secondary-color);
+            cursor: pointer;
+        }
+
+        .toggle-container::before {
+            content: "";
+            position: absolute;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            top: 1px;
+            left: 1px;
+            background-color: var(--highlight-color);
+            transition: transform 0.3s ease;
+            box-shadow: 2px 2px 5px var(--shadow-color);
+        }
+
+        .dark-mode .toggle-container::before {
+            transform: translateX(30px);
+        }
+
+        .admin-panel {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .admin-section {
+            background-color: var(--secondary-color);
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 5px 5px 10px var(--shadow-color), -5px -5px 10px var(--secondary-color);
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            background-color: var(--primary-color);
+            border-radius: 5px;
+            color: var(--text-color);
+            box-shadow: inset 2px 2px 5px var(--shadow-color), inset -2px -2px 5px var(--secondary-color);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .form-group input[type="file"] {
+            padding: 5px;
+        }
+
+        button {
+            background-color: var(--highlight-color);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            box-shadow: 2px 2px 5px var(--shadow-color), -2px -2px 5px var(--secondary-color);
+        }
+
+        button:hover {
+            background-color: #c13553;
+        }
+
+        .preview-image {
+            max-width: 100%;
+            height: auto;
+            margin-top: 10px;
+            border-radius: 5px;
+            box-shadow: 2px 2px 5px var(--shadow-color);
+        }
+
+        @keyframes backgroundAnimation {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        .background-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: linear-gradient(45deg, #ff9a9e, #fad0c4, #ffecd2);
+            background-size: 400% 400%;
+            animation: backgroundAnimation 15s ease infinite;
+            opacity: 0.1;
+        }
+    </style>
+</head>
+<body>
+    <div class="background-animation"></div>
+    <div class="container">
+        <header>
+            <h1>Panel de Administración - BonVino</h1>
+            <div class="toggle-container" id="darkModeToggle"></div>
+        </header>
+
+        <div class="admin-panel">
+            <section class="admin-section">
+                <h2>Gestión de Vinos</h2>
+                <form id="wineForm">
+                    <div class="form-group">
+                        <label for="wineName">Nombre:</label>
+                        <input type="text" id="wineName" name="wineName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="wineVarietal">Varietal:</label>
+                        <select id="wineVarietal" name="wineVarietal" required>
+                            <option value="">Seleccione un varietal</option>
+                            <option value="malbec">Malbec</option>
+                            <option value="cabernet">Cabernet Sauvignon</option>
+                            <option value="chardonnay">Chardonnay</option>
+                            <option value="other">Otro</option>
+                        </select>
+                    </div>
+                    <div class="form-group" id="otherVarietalGroup" style="display: none;">
+                        <label for="otherVarietal">Especifique el varietal:</label>
+                        <input type="text" id="otherVarietal" name="otherVarietal">
+                    </div>
+                    <div class="form-group">
+                        <label for="wineWinery">Bodega:</label>
+                        <select id="wineWinery" name="wineWinery" required>
+                            <option value="">Seleccione una bodega</option>
+                            <option value="catena">Catena Zapata</option>
+                            <option value="zuccardi">Zuccardi</option>
+                            <option value="rutini">Rutini</option>
+                            <option value="other">Otra</option>
+                        </select>
+                    </div>
+                    <div class="form-group" id="otherWineryGroup" style="display: none;">
+                        <label for="otherWinery">Especifique la bodega:</label>
+                        <input type="text" id="otherWinery" name="otherWinery">
+                    </div>
+                    <div class="form-group">
+                        <label for="wineRegion">Región:</label>
+                        <select id="wineRegion" name="wineRegion" required>
+                            <option value="">Seleccione una región</option>
+                            <option value="mendoza">Mendoza</option>
+                            <option value="salta">Salta</option>
+                            <option value="patagonia">Patagonia</option>
+                            <option value="other">Otra</option>
+                        </select>
+                    </div>
+                    <div class="form-group" id="otherRegionGroup" style="display: none;">
+                        <label for="otherRegion">Especifique la región:</label>
+                        <input type="text" id="otherRegion" name="otherRegion">
+                    </div>
+                    <button type="submit">Guardar Vino</button>
+                </form>
+            </section>
+
+            <section class="admin-section">
+                <h2>Gestión de Comidas</h2>
+                <form id="foodForm">
+                    <div class="form-group">
+                        <label for="foodName">Nombre:</label>
+                        <input type="text" id="foodName" name="foodName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="foodDescription">Descripción:</label>
+                        <textarea id="foodDescription" name="foodDescription" required></textarea>
+                    </div>
+                    <button type="submit">Guardar Comida</button>
+                </form>
+            </section>
+
+            <section class="admin-section">
+                <h2>Gestión de Maridajes</h2>
+                <form id="pairingForm">
+                    <div class="form-group">
+                        <label for="pairingName">Nombre:</label>
+                        <input type="text" id="pairingName" name="pairingName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="pairingDescription">Descripción:</label>
+                        <textarea id="pairingDescription" name="pairingDescription" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="pairingPhoto">Foto:</label>
+                        <input type="file" id="pairingPhoto" name="pairingPhoto" accept="image/jpeg, image/png" required>
+                    </div>
+                    <div id="photoPreview"></div>
+                    <div class="form-group">
+                        <label for="pairingWine">Vino:</label>
+                        <select id="pairingWine" name="pairingWine" required>
+                            <option value="">Seleccione un vino</option>
+                            <!-- Opciones de vinos se cargarán dinámicamente -->
+                        </select>
+                    </div>
+                    <div class="form-group" id="otherWineGroup" style="display: none;">
+                        <label for="otherWine">Especifique el vino:</label>
+                        <input type="text" id="otherWine" name="otherWine">
+                    </div>
+                    <button type="submit">Guardar Maridaje</button>
+                </form>
+            </section>
+        </div>
+    </div>
+
+    <script>
+        // Modo oscuro
+        const darkModeToggle = document.getElementById('darkModeToggle');
+        const body = document.body;
+
+        darkModeToggle.addEventListener('click', () => {
+            body.classList.toggle('dark-mode');
+        });
+
+        // Gestión de vinos
+        const wineForm = document.getElementById('wineForm');
+        const wineVarietal = document.getElementById('wineVarietal');
+        const otherVarietalGroup = document.getElementById('otherVarietalGroup');
+        const wineWinery = document.getElementById('wineWinery');
+        const otherWineryGroup = document.getElementById('otherWineryGroup');
+        const wineRegion = document.getElementById('wineRegion');
+        const otherRegionGroup = document.getElementById('otherRegionGroup');
+
+        wineVarietal.addEventListener('change', () => {
+            otherVarietalGroup.style.display = wineVarietal.value === 'other' ? 'block' : 'none';
+        });
+
+        wineWinery.addEventListener('change', () => {
+            otherWineryGroup.style.display = wineWinery.value === 'other' ? 'block' : 'none';
+        });
+
+        wineRegion.addEventListener('change', () => {
+            otherRegionGroup.style.display = wineRegion.value === 'other' ? 'block' : 'none';
+        });
+
+        wineForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            // Aquí iría la lógica para guardar el vino
+            console.log('Vino guardado');
+            wineForm.reset();
+        });
+
+        // Gestión de comidas
+        const foodForm = document.getElementById('foodForm');
+
+        foodForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            // Aquí iría la lógica para guardar la comida
+            console.log('Comida guardada');
+            foodForm.reset();
+        });
+
+        // Gestión de maridajes
+        const pairingForm = document.getElementById('pairingForm');
+        const pairingPhoto = document.getElementById('pairingPhoto');
+        const photoPreview = document.getElementById('photoPreview');
+        const pairingWine = document.getElementById('pairingWine');
+        const otherWineGroup = document.getElementById('otherWineGroup');
+
+        pairingPhoto.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                if (file.size > 2500 * 1024) {
+                    alert('La imagen no puede superar los 250 KB');
+                    pairingPhoto.value = '';
+                    return;
+                }
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    const img = document.createElement('img');
+                    img.src = e.target.result;
+                    img.className = 'preview-image';
+                    photoPreview.innerHTML = '';
+                    photoPreview.appendChild(img);
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        pairingWine.addEventListener('change', () => {
+            otherWineGroup.style.display = pairingWine.value === 'other' ? 'block' : 'none';
+        });
+
+        pairingForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            // Aquí iría la lógica para guardar el maridaje
+            console.log('Maridaje guardado');
+            pairingForm.reset();
+            photoPreview.innerHTML = '';
+        });
+
+        // Cargar opciones de vinos (simulado)
+        const wines = ['Malbec Reserva', 'Cabernet Sauvignon', 'Chardonnay Premium', 'Otro'];
+        wines.forEach(wine => {
+            const option = document.createElement('option');
+            option.value = wine.toLowerCase().replace(' ', '_');
+            option.textContent = wine;
+            pairingWine.appendChild(option);
+        });
+    </script>
+</body>
+</html>

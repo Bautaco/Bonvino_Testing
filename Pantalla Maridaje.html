@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>El Arte del Maridaje</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-light: #f8f5f2;
+            --text-light: #2d2d2d;
+            --accent-light: #8e3200;
+            --secondary-light: #a65d03;
+            --bg-dark: #2d2d2d;
+            --text-dark: #f8f5f2;
+            --accent-dark: #ff7d00;
+            --secondary-dark: #ffa94d;
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-light);
+            line-height: 1.6;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        h1 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 3.5rem;
+            color: var(--accent-light);
+            margin-bottom: 1rem;
+        }
+        .subtitle {
+            font-size: 1.2rem;
+            font-weight: 300;
+        }
+        .maridaje-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        .maridaje-card {
+            background-color: #ffffff;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .maridaje-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+        .maridaje-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        .maridaje-info {
+            padding: 1.5rem;
+        }
+        .maridaje-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+            color: var(--accent-light);
+        }
+        .maridaje-description {
+            margin-bottom: 1rem;
+        }
+        .maridaje-examples {
+            font-style: italic;
+            color: var(--secondary-light);
+        }
+        #theme-toggle {
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1.5rem;
+            z-index: 1000;
+        }
+        .dark-mode {
+            background-color: var(--bg-dark);
+            color: var(--text-dark);
+        }
+        .dark-mode .maridaje-card {
+            background-color: #3c3c3c;
+        }
+        .dark-mode .maridaje-title {
+            color: var(--accent-dark);
+        }
+        .dark-mode .maridaje-examples {
+            color: var(--secondary-dark);
+        }
+        .dark-mode h1 {
+            color: var(--accent-dark);
+        }
+        .interactive-section {
+            margin-top: 4rem;
+            text-align: center;
+        }
+        .interactive-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.5rem;
+            color: var(--accent-light);
+            margin-bottom: 1rem;
+        }
+        .selector-container {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        select {
+            padding: 0.5rem 1rem;
+            font-size: 1rem;
+            border-radius: 5px;
+            border: 1px solid var(--accent-light);
+            background-color: var(--bg-light);
+            color: var(--text-light);
+        }
+        .dark-mode select {
+            background-color: var(--bg-dark);
+            color: var(--text-dark);
+            border-color: var(--accent-dark);
+        }
+        #maridaje-result {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-top: 1rem;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .maridaje-card {
+            animation: fadeIn 0.6s ease-out forwards;
+            opacity: 0;
+        }
+        .maridaje-card:nth-child(1) { animation-delay: 0.1s; }
+        .maridaje-card:nth-child(2) { animation-delay: 0.2s; }
+        .maridaje-card:nth-child(3) { animation-delay: 0.3s; }
+        .maridaje-card:nth-child(4) { animation-delay: 0.4s; }
+    </style>
+</head>
+<body>
+    <button id="theme-toggle">🌙</button>
+    <div class="container">
+        <header>
+            <h1>El Arte del Maridaje</h1>
+            <p class="subtitle">Descubre la armonía perfecta entre vinos y alimentos</p>
+        </header>
+        <div class="maridaje-grid">
+            <div class="maridaje-card">
+                <img src="https://picsum.photos/seed/wine1/600/400" alt="Vinos tintos" class="maridaje-image">
+                <div class="maridaje-info">
+                    <h2 class="maridaje-title">Vinos Tintos</h2>
+                    <p class="maridaje-description">Los vinos tintos son ideales para acompañar carnes rojas, platos con salsas intensas y quesos maduros.</p>
+                    <p class="maridaje-examples">Ejemplos: Cabernet Sauvignon, Malbec, Syrah</p>
+                </div>
+            </div>
+            <div class="maridaje-card">
+                <img src="https://picsum.photos/seed/wine2/600/400" alt="Vinos blancos" class="maridaje-image">
+                <div class="maridaje-info">
+                    <h2 class="maridaje-title">Vinos Blancos</h2>
+                    <p class="maridaje-description">Los vinos blancos complementan perfectamente mariscos, pescados, aves y ensaladas frescas.</p>
+                    <p class="maridaje-examples">Ejemplos: Chardonnay, Sauvignon Blanc, Riesling</p>
+                </div>
+            </div>
+            <div class="maridaje-card">
+                <img src="https://picsum.photos/seed/wine3/600/400" alt="Vinos rosados" class="maridaje-image">
+                <div class="maridaje-info">
+                    <h2 class="maridaje-title">Vinos Rosados</h2>
+                    <p class="maridaje-description">Los rosados son versátiles y se adaptan bien a platos ligeros, tapas y comidas al aire libre.</p>
+                    <p class="maridaje-examples">Ejemplos: Provence Rosé, Garnacha Rosado, Zinfandel Blush</p>
+                </div>
+            </div>
+            <div class="maridaje-card">
+                <img src="https://picsum.photos/seed/wine4/600/400" alt="Vinos espumosos" class="maridaje-image">
+                <div class="maridaje-info">
+                    <h2 class="maridaje-title">Vinos Espumosos</h2>
+                    <p class="maridaje-description">Perfectos para aperitivos, mariscos y platos con un toque de acidez. También ideales para postres.</p>
+                    <p class="maridaje-examples">Ejemplos: Champagne, Cava, Prosecco</p>
+                </div>
+            </div>
+        </div>
+        <div class="interactive-section">
+            <h2 class="interactive-title">Encuentra tu Maridaje Perfecto</h2>
+            <div class="selector-container">
+                <select id="food-select">
+                    <option value="">Selecciona un alimento</option>
+                    <option value="carne">Carne roja</option>
+                    <option value="pescado">Pescado</option>
+                    <option value="pollo">Pollo</option>
+                    <option value="pasta">Pasta</option>
+                    <option value="queso">Queso</option>
+                    <option value="postre">Postre</option>
+                </select>
+                <select id="flavor-select">
+                    <option value="">Selecciona un sabor predominante</option>
+                    <option value="salado">Salado</option>
+                    <option value="dulce">Dulce</option>
+                    <option value="acido">Ácido</option>
+                    <option value="amargo">Amargo</option>
+                    <option value="umami">Umami</option>
+                </select>
+            </div>
+            <div id="maridaje-result"></div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+    <script>
+        const themeToggle = document.getElementById('theme-toggle');
+        const body = document.body;
+
+        themeToggle.addEventListener('click', () => {
+            body.classList.toggle('dark-mode');
+            themeToggle.textContent = body.classList.contains('dark-mode') ? '☀️' : '🌙';
+        });
+
+        gsap.from("header", {
+            duration: 1,
+            opacity: 0,
+            y: -50,
+            ease: "power3.out"
+        });
+
+        gsap.from(".maridaje-card", {
+            duration: 0.8,
+            opacity: 0,
+            y: 50,
+            stagger: 0.2,
+            ease: "power2.out",
+            delay: 0.5
+        });
+
+        const foodSelect = document.getElementById('food-select');
+        const flavorSelect = document.getElementById('flavor-select');
+        const maridajeResult = document.getElementById('maridaje-result');
+
+        function updateMaridaje() {
+            const food = foodSelect.value;
+            const flavor = flavorSelect.value;
+
+            if (food && flavor) {
+                let recomendacion = '';
+
+                if (food === 'carne' && flavor === 'salado') {
+                    recomendacion = 'Un robusto Cabernet Sauvignon o un Malbec';
+                } else if (food === 'pescado' && flavor === 'acido') {
+                    recomendacion = 'Un fresco Sauvignon Blanc o un Albariño';
+                } else if (food === 'pollo' && flavor === 'umami') {
+                    recomendacion = 'Un Chardonnay con cuerpo o un Viognier';
+                } else if (food === 'pasta' && flavor === 'acido') {
+                    recomendacion = 'Un Chianti clásico o un Sangiovese';
+                } else if (food === 'queso' && flavor === 'salado') {
+                    recomendacion = 'Un Port añejo o un Zinfandel';
+                } else if (food === 'postre' && flavor === 'dulce') {
+                    recomendacion = 'Un Moscato d\'Asti o un Sauternes';
+                } else {
+                    recomendacion = 'Un vino versátil como un Pinot Noir o un Riesling seco';
+                }
+
+                maridajeResult.textContent = `Recomendación: ${recomendacion}`;
+            } else {
+                maridajeResult.textContent = '';
+            }
+        }
+
+        foodSelect.addEventListener('change', updateMaridaje);
+        flavorSelect.addEventListener('change', updateMaridaje);
+    </script>
+</body>
+</html>
