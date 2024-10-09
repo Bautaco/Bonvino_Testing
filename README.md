@@ -7,3 +7,5 @@ Testing de Software - Pantallas Front
 - Pantalla Maridaje con los tipos que existen.
 
 - Pantalla Comida con los tipos de comida que existen
+
+No esta actualizado el panel de administracion y maridaje (09/10) pronto lo subire
