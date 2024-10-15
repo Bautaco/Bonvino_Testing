@@ -11,7 +11,7 @@ router.register(r"maridaje", views.MaridajeView, 'maridaje')
 
 urlpatterns = [
     path("bodegs_api/", include(router.urls)),
-    path("docs/", include_docs_urls(title="Maridaje API"))
+    path('docs/', include_docs_urls(title="Maridaje API"))
 ]
 
 
