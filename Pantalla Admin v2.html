@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BonVino - Experiencia en Vinos</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #8B0000;
+            --secondary-color: #FFF5E1;
+            --text-color: #333;
+            --background-color: #F0F0F0;
+            --neumorphic-light: #FFFFFF;
+            --neumorphic-dark: #D1D9E6;
+        }
+
+        .dark-mode {
+            --secondary-color: #4A4A4A;
+            --text-color: #F0F0F0;
+            --background-color: #2A2A2A;
+            --neumorphic-light: #3F3F3F;
+            --neumorphic-dark: #222222;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            transition: all 0.3s ease;
+        }
+
+        .neumorphic {
+            background: var(--background-color);
+            box-shadow: 5px 5px 10px var(--neumorphic-dark),
+                        -5px -5px 10px var(--neumorphic-light);
+            border-radius: 15px;
+            padding: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .neumorphic:hover {
+            box-shadow: inset 5px 5px 10px var(--neumorphic-dark),
+                        inset -5px -5px 10px var(--neumorphic-light);
+        }
+
+        .btn {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        .modal-content {
+            background-color: var(--background-color);
+            margin: 15% auto;
+            padding: 20px;
+            border-radius: 15px;
+            width: 80%;
+            max-width: 500px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close:hover {
+            color: #000;
+        }
+
+        #darkModeToggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            font-size: 24px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        #darkModeToggle:hover {
+            transform: scale(1.1);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .fade-in {
+            animation: fadeIn 1s ease-in;
+        }
+
+        .hero {
+            background-image: url('https://picsum.photos/1280/720?random=1');
+            background-size: cover;
+            background-position: center;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+<body class="fade-in">
+    <button id="darkModeToggle">🌓</button>
+
+    <header class="bg-gray-800 text-white p-4">
+        <nav class="container mx-auto flex justify-between items-center">
+            <h1 class="text-2xl font-bold">BonVino</h1>
+            <ul class="flex space-x-4 items-center">
+                <li><button id="InicioBtn" class="btn">Inicio</button></li>
+                <li><button id="vinoBtn" class="btn">Vino</button></li>
+                <li><button id="comidaBtn" class="btn">Comida</button></li>
+                <li><button id="maridajeBtn" class="btn">Maridaje</button></li>
+                <li><button id="loginBtn" class="btn">Iniciar Sesión</button></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="container mx-auto">
+                <h1>BonVino</h1>
+                <p>Descubre el arte del vino con nosotros</p>
+            </div>
+        </section>
+
+        <section class="container mx-auto mt-12 p-4">
+            <h2 class="text-3xl font-bold mb-6">Nuestra Selección</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="neumorphic">
+                    <h3 class="text-xl font-bold mb-2">Malbec Premium</h3>
+                    <p>Un vino tinto robusto con notas de frutas negras y un toque de roble.</p>
+                </div>
+                <div class="neumorphic">
+                    <h3 class="text-xl font-bold mb-2">Chardonnay Reserva</h3>
+                    <p>Un vino blanco elegante con aromas de frutas tropicales y un final cremoso.</p>
+                </div>
+                <div class="neumorphic">
+                    <h3 class="text-xl font-bold mb-2">Cabernet Sauvignon Gran Reserva</h3>
+                    <p>Un vino tinto complejo con taninos suaves y un bouquet de especias.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-gray-800 text-white p-4 mt-12">
+        <div class="container mx-auto text-center">
+            <p>&copy; 2024 BonVino. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <!-- Login Modal -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content neumorphic">
+            <span class="close">&times;</span>
+            <h2 class="text-2xl font-bold mb-4">Iniciar Sesión</h2>
+            <form>
+                <div class="mb-4">
+                    <label for="loginEmail" class="block mb-2">Email:</label>
+                    <input type="email" id="loginEmail" name="loginEmail" class="w-full p-2 rounded">
+                </div>
+                <div class="mb-4">
+                    <label for="loginPassword" class="block mb-2">Contraseña:</label>
+                    <input type="password" id="loginPassword" name="loginPassword" class="w-full p-2 rounded">
+                </div>
+                <button type="submit" class="btn w-full">Iniciar Sesión</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Vino Modal -->
+    <div id="vinoModal" class="modal">
+        <div class="modal-content neumorphic">
+            <span class="close">&times;</span>
+            <h2 class="text-2xl font-bold mb-4">Gestión de Vinos</h2>
+            <form>
+                <div class="mb-4">
+                    <label for="nombreVino" class="block mb-2">Nombre:</label>
+                    <input type="text" id="nombreVino" name="nombreVino" class="w-full p-2 rounded">
+                </div>
+                <div class="mb-4">
+                    <label for="varietal" class="block mb-2">Varietal:</label>
+                    <select id="varietal" name="varietal" class="w-full p-2 rounded">
+                        <option value="">Seleccione un varietal</option>
+                        <option value="malbec">Malbec</option>
+                        <option value="cabernet">Cabernet Sauvignon</option>
+                        <option value="chardonnay">Chardonnay</option>
+                        <option value="otro">Otro</option>
+                    </select>
+                </div>
+                <div class="mb-4">
+                    <label for="bodega" class="block mb-2">Bodega:</label>
+                    <select id="bodega" name="bodega" class="w-full p-2 rounded">
+                        <option value="">Seleccione una bodega</option>
+                        <option value="catena">Catena Zapata</option>
+                        <option value="zuccardi">Zuccardi</option>
+                        <option value="rutini">Rutini</option>
+                        <option value="otra">Otra</option>
+                    </select>
+                </div>
+                <div class="mb-4">
+                    <label for="region" class="block mb-2">Región:</label>
+                    <select id="region" name="region" class="w-full p-2 rounded">
+                        <option value="">Seleccione una región</option>
+                        <option value="mendoza">Mendoza</option>
+                        <option value="salta">Salta</option>
+                        <option value="patagonia">Patagonia</option>
+                        <option value="otra">Otra</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn w-full">Guardar Vino</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Comida Modal -->
+    <div id="comidaModal" class="modal">
+        <div class="modal-content neumorphic">
+            <span class="close">&times;</span>
+            <h2 class="text-2xl font-bold mb-4">Gestión de Comidas</h2>
+            <form>
+                <div class="mb-4">
+                    <label for="nombreComida" class="block mb-2">Nombre:</label>
+                    <input type="text" id="nombreComida" name="nombreComida" class="w-full p-2 rounded">
+                </div>
+                <div class="mb-4">
+                    <label for="descripcionComida" class="block mb-2">Descripción:</label>
+                    <textarea id="descripcionComida" name="descripcionComida" rows="4" class="w-full p-2 rounded"></textarea>
+                </div>
+                <button type="submit" class="btn w-full">Guardar Comida</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Maridaje Modal -->
+    <div id="maridajeModal" class="modal">
+        <div class="modal-content neumorphic">
+            <span class="close">&times;</span>
+            <h2 class="text-2xl font-bold mb-4">Gestión de Maridajes</h2>
+            <form>
+                <div class="mb-4">
+                    <label for="nombreMaridaje" class="block mb-2">Nombre:</label>
+                    <input type="text" id="nombreMaridaje" name="nombreMaridaje" class="w-full p-2 rounded">
+                </div>
+                <div class="mb-4">
+                    <label for="descripcionMaridaje" class="block mb-2">Descripción:</label>
+                    <textarea id="descripcionMaridaje" name="descripcionMaridaje" rows="4" class="w-full p-2 rounded"></textarea>
+                </div>
+                <div class="mb-4">
+                    <label for="fotoMaridaje" class="block mb-2">Foto:</label>
+                    <input type="file" id="fotoMaridaje" name="fotoMaridaje" class="w-full p-2 rounded">
+                </div>
+                <div class="mb-4">
+                    <label for="vinoMaridaje" class="block mb-2">Vino:</label>
+                    <select id="vinoMaridaje" name="vinoMaridaje" class="w-full p-2 rounded">
+                        <option value="">Seleccione un vino</option>
+                        <!-- Add options dynamically based on available wines -->
+                    </select>
+                </div>
+                <button type="submit" class="btn w-full">Guardar Maridaje</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const darkModeToggle = document.getElementById('darkModeToggle');
+        const body = document.body;
+
+        darkModeToggle.addEventListener('click', () => {
+            body.classList.toggle('dark-mode');
+        });
+
+        // Function to open modal
+        function openModal(modalId) {
+            document.getElementById(modalId).style.display = "block";
+        }
+
+        // Function to close modal
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = "none";
+        }
+
+        // Event listeners for buttons
+        document.getElementById('InicioBtn').onclick = () => openModal('inicioModal');
+        document.getElementById('loginBtn').onclick = () => openModal('loginModal');
+        document.getElementById('vinoBtn').onclick = () => openModal('vinoModal');
+        document.getElementById('comidaBtn').onclick = () => openModal('comidaModal');
+        document.getElementById('maridajeBtn').onclick = () => openModal('maridajeModal');
+
+        // Event listeners for close buttons
+        document.querySelectorAll('.close').forEach(closeBtn => {
+            closeBtn.onclick = function() {
+                this.closest('.modal').style.display = "none";
+            }
+        });
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            if (event.target.classList.contains('modal')) {
+                event.target.style.display = "none";
+            }
+        }
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Add scroll-triggered animations
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('fade-in');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('section').forEach(section => {
+            observer.observe(section);
+        });
+    </script>
+</body>
+</html>

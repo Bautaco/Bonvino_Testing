@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BonVino - Experiencia en Vinos</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #8B0000;
+            --secondary-color: #FFF5E1;
+            --text-color: #333;
+            --background-color: #F0F0F0;
+            --neumorphic-light: #FFFFFF;
+            --neumorphic-dark: #D1D9E6;
+        }
+
+        .dark-mode {
+            --primary-color: #FF6B6B;
+            --secondary-color: #4A4A4A;
+            --text-color: #F0F0F0;
+            --background-color: #2A2A2A;
+            --neumorphic-light: #3F3F3F;
+            --neumorphic-dark: #222222;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            transition: all 0.3s ease;
+        }
+
+        .neumorphic {
+            background: var(--background-color);
+            box-shadow: 5px 5px 10px var(--neumorphic-dark),
+                        -5px -5px 10px var(--neumorphic-light);
+            border-radius: 15px;
+            padding: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .neumorphic:hover {
+            box-shadow: inset 5px 5px 10px var(--neumorphic-dark),
+                        inset -5px -5px 10px var(--neumorphic-light);
+        }
+
+        .btn {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        .modal-content {
+            background-color: var(--background-color);
+            margin: 15% auto;
+            padding: 20px;
+            border-radius: 15px;
+            width: 300px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close:hover {
+            color: #000;
+        }
+
+        #darkModeToggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            font-size: 24px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        #darkModeToggle:hover {
+            transform: scale(1.1);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .fade-in {
+            animation: fadeIn 1s ease-in;
+        }
+
+        .hero {
+            background-image: url('https://picsum.photos/1920/1080?random=1');
+            background-size: cover;
+            background-position: center;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+<body class="fade-in">
+    <button id="darkModeToggle">🌓</button>
+
+    <header class="bg-gray-800 text-white p-4">
+        <nav class="container mx-auto flex justify-between items-center">
+            <h1 class="text-2xl font-bold">BonVino</h1>
+            <ul class="flex space-x-4 items-center">
+                <li><a href="#" class="hover:text-gray-300">Vinos</a></li>
+                <li><a href="#" class="hover:text-gray-300">Comida</a></li>
+                <li><a href="#" class="hover:text-gray-300">Maridaje</a></li>
+                <li><a href="#" class="hover:text-gray-300">Contacto</a></li>
+                <li><button id="loginBtn" class="btn">Iniciar Sesión</button></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div>
+                <h1>BonVino</h1>
+                <p>Descubre la pasión por el vino</p>
+            </div>
+        </section>
+
+        <section class="container mx-auto my-12 p-6 neumorphic">
+            <h2 class="text-3xl font-bold mb-4">Malbec Bodega</h2>
+            <p>Un vino tinto elegante con notas de frutas negras y un toque de roble.</p>
+        </section>
+
+        <section class="container mx-auto my-12 p-6 neumorphic">
+            <h2 class="text-3xl font-bold mb-4">Cuenta Premium</h2>
+            <p>Accede a las novedades de los vinos, bodegas, etcétera.</p>
+        </section>
+
+        <section class="container mx-auto my-12 p-6 neumorphic">
+            <h2 class="text-3xl font-bold mb-4">Maridaje</h2>
+            <p>Un rosado suave y refrescante, ideal para tardes de verano.</p>
+        </section>
+
+        <section class="container mx-auto my-12 p-6 neumorphic">
+            <h2 class="text-3xl font-bold mb-4">Platos Gourmet</h2>
+            <p>Comida elegante con finos cortes y un sabor persistente.</p>
+        </section>
+
+        <section class="container mx-auto my-12 p-6 neumorphic">
+            <h2 class="text-3xl font-bold mb-4">Recomendaciones del Sommelier</h2>
+            <h3 class="text-2xl font-semibold mb-2">Maridaje Perfecto</h3>
+            <p>Descubre las mejores combinaciones de vinos y platos para elevar tu experiencia gastronómica.</p>
+        </section>
+
+        <section class="container mx-auto my-12 p-6 neumorphic">
+            <h2 class="text-3xl font-bold mb-4">Vino del Mes</h2>
+            <p>Nuestra selección especial: un Cabernet Sauvignon de edición limitada que no puedes dejar pasar.</p>
+        </section>
+
+        <section class="container mx-auto my-12 p-6 neumorphic">
+            <h2 class="text-3xl font-bold mb-4">Guía de Cata</h2>
+            <p>Aprende los secretos para apreciar cada nota y aroma en tu copa de vino.</p>
+        </section>
+
+        <section class="container mx-auto my-12 p-6 neumorphic">
+            <h2 class="text-3xl font-bold mb-4">Contáctanos</h2>
+            <form>
+                <div class="mb-4">
+                    <label for="name" class="block mb-2">Nombre:</label>
+                    <input type="text" id="name" name="name" class="w-full p-2 rounded">
+                </div>
+                <div class="mb-4">
+                    <label for="email" class="block mb-2">Email:</label>
+                    <input type="email" id="email" name="email" class="w-full p-2 rounded">
+                </div>
+                <div class="mb-4">
+                    <label for="message" class="block mb-2">Mensaje:</label>
+                    <textarea id="message" name="message" rows="4" class="w-full p-2 rounded"></textarea>
+                </div>
+                <button type="submit" class="btn">Enviar</button>
+            </form>
+        </section>
+    </main>
+
+    <footer class="bg-gray-800 text-white p-4 mt-12">
+        <div class="container mx-auto text-center">
+            <p>&copy; 2023 BonVino. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <div id="loginModal" class="modal">
+        <div class="modal-content neumorphic">
+            <span class="close">&times;</span>
+            <h2 class="text-2xl font-bold mb-4">Iniciar Sesión</h2>
+            <form>
+                <div class="mb-4">
+                    <label for="loginEmail" class="block mb-2">Usuario:</label>
+                    <input type="email" id="loginEmail" name="loginEmail" class="w-full p-2 rounded">
+                </div>
+                <div class="mb-4">
+                    <label for="loginPassword" class="block mb-2">Contraseña:</label>
+                    <input type="password" id="loginPassword" name="loginPassword" class="w-full p-2 rounded">
+                </div>
+                <button type="submit" class="btn w-full">Iniciar Sesión</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const darkModeToggle = document.getElementById('darkModeToggle');
+        const body = document.body;
+
+        darkModeToggle.addEventListener('click', () => {
+            body.classList.toggle('dark-mode');
+        });
+
+        const loginBtn = document.getElementById('loginBtn');
+        const loginModal = document.getElementById('loginModal');
+        const closeBtn = document.getElementsByClassName('close')[0];
+
+        loginBtn.onclick = function() {
+            loginModal.style.display = "block";
+        }
+
+        closeBtn.onclick = function() {
+            loginModal.style.display = "none";
+        }
+
+        window.onclick = function(event) {
+            if (event.target == loginModal) {
+                loginModal.style.display = "none";
+            }
+        }
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Simple form validation
+        const contactForm = document.querySelector('form');
+        contactForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const message = document.getElementById('message').value;
+
+            if (name && email && message) {
+                alert('Gracias por tu mensaje. Nos pondremos en contacto contigo pronto.');
+                contactForm.reset();
+            } else {
+                alert('Por favor, completa todos los campos.');
+            }
+        });
+
+        // Add scroll-triggered animations
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('fade-in');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('section').forEach(section => {
+            observer.observe(section);
+        });
+    </script>
+</body>
+</html>
