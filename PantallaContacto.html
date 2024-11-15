@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BonVino - Contacto</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #722F37;
+            --secondary-color: #2C1810;
+            --accent-color: #D4AF37;
+            --text-light: #F5F5F5;
+            --text-dark: #1A1A1A;
+        }
+
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            transition: all 0.3s ease;
+            background-color: var(--text-light);
+            color: var(--text-dark);
+        }
+
+        body.dark-mode {
+            background-color: var(--text-dark);
+            color: var(--text-light);
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+            transition: transform 0.3s ease;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .contact-form input,
+        .contact-form textarea {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(5px);
+            transition: all 0.3s ease;
+        }
+
+        .contact-form input:focus,
+        .contact-form textarea:focus {
+            border-color: var(--accent-color);
+            outline: none;
+            box-shadow: 0 0 10px rgba(212, 175, 55, 0.3);
+        }
+
+        .submit-btn {
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            transition: all 0.3s ease;
+        }
+
+        .submit-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .contact-info-item {
+            transition: all 0.3s ease;
+        }
+
+        .contact-info-item:hover {
+            transform: translateX(10px);
+            color: var(--accent-color);
+        }
+
+        .wine-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.1;
+            background: 
+                radial-gradient(circle at 20% 30%, #722F37 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, #2C1810 0%, transparent 50%);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .animate-fade-in {
+            animation: fadeIn 0.8s ease forwards;
+        }
+    </style>
+</head>
+<body>
+    <div class="wine-bg"></div>
+    
+    <!-- Navbar -->
+    <nav class="fixed top-0 w-full bg-opacity-90 backdrop-filter backdrop-blur-lg z-50 p-4">
+        <div class="container mx-auto flex justify-between items-center">
+            <a href="#" class="text-2xl font-bold text-primary">BonVino</a>
+            <button id="darkModeToggle" class="p-2 rounded-full">
+                🌓
+            </button>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container mx-auto px-4 pt-24 pb-12">
+        <h1 class="text-4xl font-bold text-center mb-12 animate-fade-in">Contáctanos</h1>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <!-- Contact Form -->
+            <div class="glass-card p-8 animate-fade-in" style="animation-delay: 0.2s">
+                <h2 class="text-2xl font-semibold mb-6">Envíanos un mensaje</h2>
+                <form class="contact-form space-y-6">
+                    <div>
+                        <label class="block mb-2">Nombre completo</label>
+                        <input type="text" class="w-full p-3 rounded-lg" required>
+                    </div>
+                    <div>
+                        <label class="block mb-2">Email</label>
+                        <input type="email" class="w-full p-3 rounded-lg" required>
+                    </div>
+                    <div>
+                        <label class="block mb-2">Teléfono</label>
+                        <input type="tel" class="w-full p-3 rounded-lg">
+                    </div>
+                    <div>
+                        <label class="block mb-2">Mensaje</label>
+                        <textarea class="w-full p-3 rounded-lg h-32" required></textarea>
+                    </div>
+                    <button type="submit" class="submit-btn text-white px-8 py-3 rounded-lg w-full">
+                        Enviar mensaje
+                    </button>
+                </form>
+            </div>
+
+            <!-- Contact Information -->
+            <div class="space-y-8">
+                <div class="glass-card p-8 animate-fade-in" style="animation-delay: 0.4s">
+                    <h2 class="text-2xl font-semibold mb-6">Información de contacto</h2>
+                    <div class="space-y-4">
+                        <div class="contact-info-item flex items-center">
+                            <i class="fas fa-map-marker-alt w-8"></i>
+                            <span>Av. del Vino 123, Mendoza, Argentina</span>
+                        </div>
+                        <div class="contact-info-item flex items-center">
+                            <i class="fas fa-phone w-8"></i>
+                            <span>+54 (261) 555-0123</span>
+                        </div>
+                        <div class="contact-info-item flex items-center">
+                            <i class="fas fa-envelope w-8"></i>
+                            <span>contacto@bonvino.com</span>
+                        </div>
+                        <div class="contact-info-item flex items-center">
+                            <i class="fas fa-clock w-8"></i>
+                            <span>Lun - Sáb: 10:00 - 20:00</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Social Media -->
+                <div class="glass-card p-8 animate-fade-in" style="animation-delay: 0.6s">
+                    <h2 class="text-2xl font-semibold mb-6">Síguenos</h2>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-2xl hover:text-accent-color transition-colors">
+                            <i class="fab fa-facebook"></i>
+                        </a>
+                        <a href="#" class="text-2xl hover:text-accent-color transition-colors">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="text-2xl hover:text-accent-color transition-colors">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="text-2xl hover:text-accent-color transition-colors">
+                            <i class="fab fa-linkedin"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="mt-12 py-6 text-center">
+        <p>© 2023 BonVino. Todos los derechos reservados.</p>
+    </footer>
+
+    <script>
+        // Dark mode toggle
+        const darkModeToggle = document.getElementById('darkModeToggle');
+        darkModeToggle.addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
+        });
+
+        // Form submission
+        document.querySelector('form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            // Add your form submission logic here
+            alert('Mensaje enviado con éxito. Nos pondremos en contacto contigo pronto.');
+        });
+
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>
