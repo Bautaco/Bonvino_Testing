@@ -20,7 +20,7 @@ class IntegrationTest(TestCase):
         )
 
         # Prueba de cracion de vino y comida
-        def test_creacion_vino(self):
+        def testCreacionVino(self):
             vino = Vino.objects.get(nombre='Cabernet Sauvignon')
             self.assertEqual(vino.bodega, 'Sapo de Otro Pozo')
             self.assertEqual(vino.varietal, 'Chardonay')

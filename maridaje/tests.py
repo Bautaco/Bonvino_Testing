@@ -85,4 +85,3 @@ class MaridajeModelTest(TestCase):
             maridaje.clean()  # Llama al método clean
         # Verifica que el mensaje de error sea el esperado
         self.assertEqual(context.exception.messages, ['El campo descripcion no puede estar vacío.'])
-        
